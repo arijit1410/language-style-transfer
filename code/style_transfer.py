@@ -224,7 +224,7 @@ if __name__ == '__main__':
 
     config = tf.compat.v1.ConfigProto()
     config.gpu_options.allow_growth = True
-    with tf.Session(config=config) as sess:
+    with tf.compat.v1.Session(config=config) as sess:
         model = create_model(sess, args, vocab)
 
         if args.beam > 1:
