@@ -33,11 +33,11 @@ class Model(object):
 
         self.dropout = tf.placeholder(tf.float32,
             name='dropout')
-        self.learning_rate = tf.v1.placeholder(tf.float32,
+        self.learning_rate = tf.placeholder(tf.float32,
             name='learning_rate')
-        self.rho = tf.v1.placeholder(tf.float32,
+        self.rho = tf.placeholder(tf.float32,
             name='rho')
-        self.gamma = tf.v1.placeholder(tf.float32,
+        self.gamma = tf.placeholder(tf.float32,
             name='gamma')
 
         self.batch_len = tf.placeholder(tf.int32,
