@@ -222,7 +222,7 @@ if __name__ == '__main__':
         test0 = load_sent(args.test + '.0')
         test1 = load_sent(args.test + '.1')
 
-    config = tf.ConfigProto()
+    config = tf.compat.v1.ConfigProto()
     config.gpu_options.allow_growth = True
     with tf.Session(config=config) as sess:
         model = create_model(sess, args, vocab)
