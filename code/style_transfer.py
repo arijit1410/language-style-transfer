@@ -5,7 +5,8 @@ import ipdb
 import random
 import cPickle as pickle
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 from vocab import Vocabulary, build_vocab
 from accumulator import Accumulator
@@ -222,9 +223,9 @@ if __name__ == '__main__':
         test0 = load_sent(args.test + '.0')
         test1 = load_sent(args.test + '.1')
 
-    config = tf.compat.v1.ConfigProto()
+    config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
-    with tf.compat.v1.Session(config=config) as sess:
+    with tf.Session(config=config) as sess:
         model = create_model(sess, args, vocab)
 
         if args.beam > 1:
