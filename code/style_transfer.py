@@ -32,7 +32,7 @@ class Model(object):
 
         self.dropout = tf.compat.v1.placeholder(tf.float32,
             name='dropout')
-        self.learning_rate = tf.placeholder(tf.float32,
+        self.learning_rate = tf.compat.v1.placeholder(tf.float32,
             name='learning_rate')
         self.rho = tf.compat.v1.placeholder(tf.float32,
             name='rho')
