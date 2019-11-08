@@ -7,6 +7,7 @@ import cPickle as pickle
 import numpy as np
 # import tensorflow.compat.v1 as tf
 # tf.disable_v2_behavior()
+import tensorflow as tf
 
 from vocab import Vocabulary, build_vocab
 from accumulator import Accumulator
@@ -30,37 +31,37 @@ class Model(object):
         beta1, beta2 = 0.5, 0.999
         grad_clip = 30.0
 
-        self.dropout = tf.compat.v1.placeholder(tf.float32,
+        self.dropout = tf.placeholder(tf.float32,
             name='dropout')
-        self.learning_rate = tf.compat.v1.placeholder(tf.float32,
+        self.learning_rate = tf.v1.placeholder(tf.float32,
             name='learning_rate')
-        self.rho = tf.compat.v1.placeholder(tf.float32,
+        self.rho = tf.v1.placeholder(tf.float32,
             name='rho')
-        self.gamma = tf.compat.v1.placeholder(tf.float32,
+        self.gamma = tf.v1.placeholder(tf.float32,
             name='gamma')
 
-        self.batch_len = tf.compat.v1.placeholder(tf.int32,
+        self.batch_len = tf.placeholder(tf.int32,
             name='batch_len')
-        self.batch_size = tf.compat.v1.placeholder(tf.int32,
+        self.batch_size = tf.placeholder(tf.int32,
             name='batch_size')
-        self.enc_inputs = tf.compat.v1.placeholder(tf.int32, [None, None],    #size * len
+        self.enc_inputs = tf.placeholder(tf.int32, [None, None],    #size * len
             name='enc_inputs')
-        self.dec_inputs = tf.compat.v1.placeholder(tf.int32, [None, None],
+        self.dec_inputs = tf.placeholder(tf.int32, [None, None],
             name='dec_inputs')
-        self.targets = tf.compat.v1.placeholder(tf.int32, [None, None],
+        self.targets = tf.placeholder(tf.int32, [None, None],
             name='targets')
-        self.weights = tf.compat.v1.placeholder(tf.float32, [None, None],
+        self.weights = tf.placeholder(tf.float32, [None, None],
             name='weights')
-        self.labels = tf.compat.v1.placeholder(tf.float32, [None],
+        self.labels = tf.placeholder(tf.float32, [None],
             name='labels')
 
         labels = tf.reshape(self.labels, [-1, 1])
 
-        embedding = tf.compat.v1.get_variable('embedding',
+        embedding = tf.get_variable('embedding',
             initializer=vocab.embedding.astype(np.float32))
         with tf.variable_scope('projection'):
-            proj_W = tf.compat.v1.get_variable('W', [dim_h, vocab.size])
-            proj_b = tf.compat.v1.get_variable('b', [vocab.size])
+            proj_W = tf.get_variable('W', [dim_h, vocab.size])
+            proj_b = tf.get_variable('b', [vocab.size])
 
         enc_inputs = tf.nn.embedding_lookup(embedding, self.enc_inputs)
         dec_inputs = tf.nn.embedding_lookup(embedding, self.dec_inputs)
@@ -223,9 +224,9 @@ if __name__ == '__main__':
         test0 = load_sent(args.test + '.0')
         test1 = load_sent(args.test + '.1')
 
-    config = tf.compat.v1.ConfigProto()
+    config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
-    with tf.compat.v1.Session(config=config) as sess:
+    with tf.Session(config=config) as sess:
         model = create_model(sess, args, vocab)
 
         if args.beam > 1:
