@@ -56,11 +56,11 @@ class Model(object):
 
         labels = tf.reshape(self.labels, [-1, 1])
 
-        embedding = tf.get_variable('embedding',
+        embedding = tf.compat.v1.get_variable('embedding',
             initializer=vocab.embedding.astype(np.float32))
         with tf.variable_scope('projection'):
-            proj_W = tf.get_variable('W', [dim_h, vocab.size])
-            proj_b = tf.get_variable('b', [vocab.size])
+            proj_W = tf.compat.v1.get_variable('W', [dim_h, vocab.size])
+            proj_b = tf.compat.v1.get_variable('b', [vocab.size])
 
         enc_inputs = tf.nn.embedding_lookup(embedding, self.enc_inputs)
         dec_inputs = tf.nn.embedding_lookup(embedding, self.dec_inputs)
